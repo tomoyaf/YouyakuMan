@@ -1,0 +1,6 @@
+Japanese_L-12_H-768_A-12_E-30_BPE/
+libexec/
+model/
+.vscode/
+checkpoint/
+bin/
