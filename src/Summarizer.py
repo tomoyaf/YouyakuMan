@@ -5,10 +5,11 @@ sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 
 class Summarizer:
-    def __init__(self, test_data, model, n, translator=None):
+    def __init__(self, test_data, model, n, translator=None, device='cuda'):
         self.data = test_data
         self.model = model
         self.translator = translator
+        self.device = device
         n = self.n_distribution(n)
         start_n = 0
         for i, data in enumerate(self.data):
@@ -17,6 +18,7 @@ class Summarizer:
             start_n += n[i]
 
     def n_distribution(self, n):
+        print(self.data, len(self.data))
         if len(self.data) == 1:
             return [n]
         else:
@@ -64,11 +66,11 @@ class Summarizer:
     def _evaluate(self, test_data):
         self.model.eval()
         with torch.no_grad():
-            src = torch.tensor([test_data['src']])
-            segs = torch.tensor([test_data['segs']])
-            clss = torch.tensor([test_data['clss']])
-            mask = torch.tensor([test_data['mask']])
-            mask_cls = torch.tensor([test_data['mask_cls']])
+            src = torch.tensor([test_data['src']]).to(self.device)
+            segs = torch.tensor([test_data['segs']]).to(self.device)
+            clss = torch.tensor([test_data['clss']]).to(self.device)
+            mask = torch.tensor([test_data['mask']]).to(self.device)
+            mask_cls = torch.tensor([test_data['mask_cls']]).to(self.device)
 
             sent_scores, mask = self.model(src, segs, clss, mask, mask_cls)
 

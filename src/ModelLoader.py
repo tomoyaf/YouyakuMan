@@ -6,6 +6,8 @@ import pdb
 from src.models.encoder import TransformerInterEncoder
 from src.LangFactory import LangFactory
 
+from src.models.model_builder import Summarizer as mbSummarizer
+
 
 class Bert(nn.Module):
     def __init__(self, bert_model, temp_dir):

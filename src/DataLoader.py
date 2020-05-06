@@ -5,8 +5,9 @@ import pdb
 
 
 class DataLoader:
-    def __init__(self, path, super_long, lang, translator=None):
+    def __init__(self, path, super_long, lang, translator=None, device='cuda'):
         self.path = path
+        self.device = device
         self.data = []
         self.super_long = super_long
         self.langfac = LangFactory(lang)

@@ -2,6 +2,7 @@ import pickle
 import os
 import random
 import torch
+import codecs
 
 from src.models.preprocess import Preprocess
 
@@ -10,8 +11,10 @@ def lazy_dataset(data_path, shuffle):
     data_path = data_path if data_path[-1] is '/' else data_path+'/'
 
     def _lazy_load(path):
-        with open(path, 'rb') as f:
+        with codecs.open(path, 'rb', 'utf-8', 'ignore') as f:
             return pickle.load(f)
+        # with open(path, 'rb') as f:
+        #     return pickle.load(f)
 
     pts = [data_path + x for x in os.listdir(data_path) if '.pickle' in x]
     if pts:
